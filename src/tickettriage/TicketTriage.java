@@ -5,36 +5,36 @@ import java.util.Comparator;
 class Ticket {
     String name;
     int urgency;
-    int arrivalOrder;
 
-    Ticket(String name, int urgency, int arrivalOrder) {
+    public Ticket(String name, int urgency) {
         this.name = name;
         this.urgency = urgency;
-        this.arrivalOrder = arrivalOrder;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + urgency + ")";
     }
 }
 
 public class TicketTriage {
     public static void main(String[] args) {
 
-        PriorityQueue<Ticket> tickets = new PriorityQueue<>(
-            Comparator.comparingInt((Ticket t) -> t.urgency)
-                      .thenComparingInt(t -> t.arrivalOrder)
+        
+        PriorityQueue<Ticket> queue = new PriorityQueue<>(
+            Comparator.comparingInt(ticket -> ticket.urgency)
         );
 
-        tickets.offer(new Ticket("Printer", 3, 1));
-        tickets.offer(new Ticket("Network", 1, 2));
-        tickets.offer(new Ticket("Login", 2, 3));
+        
+        queue.offer(new Ticket("Printer", 3));
+        queue.offer(new Ticket("Network", 1));
+        queue.offer(new Ticket("Login", 2));
 
-        System.out.println("=== HELP-DESK TICKET TRIAGE ===");
+       
+        System.out.println("Ticket Triage Queue:");
 
-        while (!tickets.isEmpty()) {
-            Ticket ticket = tickets.poll();
-
-            System.out.println(
-                "Ticket: " + ticket.name +
-                " | Urgency: " + ticket.urgency
-            );
+        while (!queue.isEmpty()) {
+            System.out.println(queue.poll());
         }
     }
 }
